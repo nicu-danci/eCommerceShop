@@ -1,0 +1,113 @@
+﻿@model IEnumerable<eCommerceShop.Models.Products>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<br />
+
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="text-info">Product List</h2>
+        </div>
+        <div class="col-lg-6 text-right">
+            <a asp-action="Create" class="btn btn-info">
+                <i class="fas fa-plus"></i>&nbsp; Add new product
+            </a>
+        </div>
+    </div>
+
+ 
+    <form asp-action="Index" method="get">
+        <div class="form-actions no-color">
+            <p>
+                <input type="text" placeholder="Search products" name="SearchString" value="@ViewData["CurrentFilter"]" style="width:500px;" />
+                <input type="submit" value="Search" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-success">Back to Full List</a>
+            </p>
+        </div>
+    </form>
+    <br />
+    <div>
+       
+        <table class="table table-striped border" id="myTable">
+            <thead>
+                <tr class="table-info">
+                    
+                    <th>
+                        @Html.DisplayNameFor(c =>c.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(c =>c.Price )
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(c =>c.Image)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(c =>c.ProductColor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(c =>c.IsAvailable)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(c =>c.ProductTypeId)
+                    </th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>@item.Price</td>
+                        <td><img src="~/@item.Image" width="100%" height="50px" style="border-radius: 5px; border:1px solid #efefef" /></td>
+                        <td>@item.ProductColor</td>
+                        <td>@item.IsAvailable</td>
+                        <td>@item.ProductTypes.ProductType</td>
+                        <td class=" text-right">
+                            <a asp-action="Edit" asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                            <a asp-action="Details" asp-route-id="@item.Id"><i class="fas fa-list-ul"></i></a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.11.2/build/alertify.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+            });
+        });
+        $(function () {
+            var save = '@TempData["save"]'
+            if (save != '') {
+                alertify.success(save);
+            }
+            var edit = '@TempData["edit"]'
+            if (edit != '') {
+                alertify.success(edit);
+            }
+            var del = '@TempData["delete"]'
+            if (del != '') {
+                alertify.error(del);
+            }
+        })
+    </script>
+}

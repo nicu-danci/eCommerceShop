@@ -1,0 +1,123 @@
+﻿@*
+this changed over night ???? 
+    
+@model IEnumerable<eCommerceShop.Models.ProductTypes>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductType)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductType)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+*@
+
+@model IEnumerable<eCommerceShop.Models.ProductTypes>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<br />
+<br />
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2 class="text-info">Product List</h2>
+    </div>
+    <div class="col-lg-6 text-right">
+        <a asp-action="Create" class="btn btn-info"><i class="fas fa-plus"></i>Add new product</a>
+    </div>
+
+
+</div>
+
+<br />
+<div>
+    <table class="table table-striped border">
+        <thead>
+            <tr class="table-info">
+                <th>@Html.DisplayNameFor(c =>c.ProductType)</th>
+                <th></th>
+                <th>
+
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+               <tr>
+                   <td>@item.ProductType</td>
+                   <td class=" text-right">
+                        <a asp-action="Edit"   asp-route-id="@item.Id"><i class="fas fa-edit"></i></a> |
+                        <a asp-action="Details"  asp-route-id="@item.Id"><i class="fas fa-list-ul"></i></a> |
+                        <a asp-action="Delete"  asp-route-id="@item.Id">
+                            <i class="fas fa-trash-alt"></i></a>
+                   </td>
+               </tr> 
+            }
+        </thead>
+
+    </table>
+
+</div>
+
+@section scripts {
+    <script src="~/js/alertify.js"></script>
+    <link href="~/css/alertify.css" rel="stylesheet" />
+    
+    <script type="text/javascript">
+    $(function () {
+        var save = '@TempData["save"]'
+        if (save !='') {
+            alertify.success(save);
+            
+        }
+
+                var edit = '@TempData["edit"]'
+        if (edit !='') {
+            alertify.success(edit);
+        }
+
+            var del = '@TempData["delete"]'
+        if (del !='') {
+            alertify.success(del);
+            
+        }
+
+            var create = '@TempData["create"]'
+            if (create != '') {
+                alertify.success(create);
+
+            }
+    })
+    </script>
+}
+                

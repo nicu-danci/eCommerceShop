@@ -1,0 +1,74 @@
+﻿@model IEnumerable<eCommerceShop.Models.Products>
+
+
+@{
+    ViewData["Title"] = "Product Page";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="title">
+                <h2 class="text-info">Products</h2>
+
+                <form asp-action="Index" method="get">
+                    <div class="form-actions no-color">
+                        <p>
+                            <input type="text" placeholder="Search products" name="SearchString" value="@ViewData["CurrentFilter"]" style="width:500px;" />
+                            <input type="submit" value="Search" class="btn btn-primary" /> 
+                            <a asp-action="Index" class="btn btn-success">Back to Full List</a>
+                        </p>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        @foreach(var product in Model)
+        {
+            <div class="col-md-6 col-lg-4 col-xs-12">
+                <div class="card mb-4 grey-bg">
+                    <img src="~/@product.Image" alt="Card Image" class="card-img-top" style="height:300px" /> 
+                    
+                    <!-- Card Content-->
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group-lg">
+                                <!-- Title -->
+                                <h3 class="card-title">
+                                    <label class="text-uppercase" style="color:black">@product.Name</label>
+                                    <label style="color:dimgrey">Price: £@product.Price</label>
+                                </h3>
+
+
+
+                                <div>
+                                    <a asp-action="Detail" asp-controller="Product" asp-route-id="@product.Id"
+                                class="btn btn-primary ">Details</a>
+                                    @if (product.IsAvailable)
+                                    {
+                                        
+                                    }
+                                    else
+                                    {
+                                
+                                            <img src="~/Images/out_of_stock.jpg" width="100px" height="30px" />
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+        }
+
+
+
+
+
+    </div>
+
+</div>
+
